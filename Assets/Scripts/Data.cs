@@ -58,21 +58,24 @@ public class Data : MonoBehaviour
 
     public void SortData(List<string> Genres, int Year, int SearchType)
     {
-        /*if(SearchType == 0)
-        {
-            QuickSort();
-        }
-        else
-        {*/
-            MaxHeap(Genres, Year);
-        //}
+        // need to implement timers
+
+        QuickSort();
+
+        float heapStartTime = Time.realtimeSinceStartup;
+
+        MaxHeap(Genres, Year, SearchType);
+
+        float maxHeapTime = Time.realtimeSinceStartup - heapStartTime;
+
+        Debug.Log("Max Heap Time: " + maxHeapTime);
     }
 
     private void QuickSort()
     {
 
     }
-    private void MaxHeap(List<string> Genres, int Year)
+    private void MaxHeap(List<string> Genres, int Year, int sortMethod)
     {
         Debug.Log("Making Max Heap...");
 
@@ -103,25 +106,25 @@ public class Data : MonoBehaviour
 
         // make the heap
 
-        MakeHeap();
+        MakeHeap(sortMethod);
 
         for(int i = 0; i < 5; i++)
         {
-            Debug.Log(heap[i].Key + "           \n");
+            Debug.Log(heap[i].Key);
         }
     }
 
-    private void MakeHeap()
+    private void MakeHeap(int sortMethod)
     {
         // heapify the nodes to make the max heap
 
         for (int i = heap.Length / 2 - 1; i >= 0; i--)
         {
-            heapify(i);
+            heapify(i, sortMethod);
         }
     }
 
-    private void heapify(int i)
+    private void heapify(int i, int sortMethod)
     {
         // initializing the left and right children of each node
 
@@ -129,16 +132,28 @@ public class Data : MonoBehaviour
         int right = 2 * i + 2;
         int largest = i;
 
+        // determine values to be compared using the sortMethod
+        int valueToCompare = 0;
+
+        if(sortMethod == 0)
+        {
+            valueToCompare = 3;
+        }
+        else
+        {
+            valueToCompare = 1;
+        }
+
         // if the right node is in bounds and larger than the current largest node, right node becomes the new largest
 
-        if (right < heap.Length && float.Parse(heap[right].Value[3]) > float.Parse(heap[largest].Value[3]))
+        if (right < heap.Length && float.Parse(heap[right].Value[valueToCompare]) > float.Parse(heap[largest].Value[valueToCompare]))
         {
             largest = right;
         }
 
         // or if the left node is in bounds and larger than the current largest node, left is new largest
 
-        if (left < heap.Length && float.Parse(heap[left].Value[3]) > float.Parse(heap[largest].Value[3]))
+        if (left < heap.Length && float.Parse(heap[left].Value[valueToCompare]) > float.Parse(heap[largest].Value[valueToCompare]))
         {
             largest = left;
         }
@@ -151,7 +166,7 @@ public class Data : MonoBehaviour
             heap[i] = heap[largest];
             heap[largest] = temp;
 
-            heapify(largest);
+            heapify(largest, sortMethod);
         }
     }
 }
