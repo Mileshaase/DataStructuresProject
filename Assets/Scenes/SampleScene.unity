@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50s Movies
+  m_text: Any Year
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e20b2bf176da5241a6fa7cf288ef3ce, type: 2}
   m_sharedMaterial: {fileID: -1647684504381650325, guid: 3e20b2bf176da5241a6fa7cf288ef3ce, type: 2}
@@ -3100,7 +3100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000038146973}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &689540302
@@ -3813,7 +3813,7 @@ MonoBehaviour:
   m_HorizontalScrollbarVisibility: 0
   m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: 0
-  m_VerticalScrollbarSpacing: -10
+  m_VerticalScrollbarSpacing: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4072,7 +4072,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1803713544}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9300001
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5568,6 +5568,8 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
+    - m_Text: Any Year
+      m_Image: {fileID: 0}
     - m_Text: 50s Movies
       m_Image: {fileID: 0}
     - m_Text: 60s Movies
@@ -7226,7 +7228,7 @@ RectTransform:
   m_Father: {fileID: 327265786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 0.9300001}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
