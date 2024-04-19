@@ -58,9 +58,7 @@ public class Data : MonoBehaviour
 
     public void SortData(List<string> Genres, int Year, int SearchType)
     {
-        // need to implement timers
-
-        QuickSort();
+        QuickSort(Genres, Year, SearchType);
 
         float heapStartTime = Time.realtimeSinceStartup;
 
@@ -71,8 +69,32 @@ public class Data : MonoBehaviour
         Debug.Log("Max Heap Time: " + maxHeapTime);
     }
 
-    private void QuickSort()
+    private void QuickSort(List<string> Genres, int Year, int SortType)
     {
+        Debug.Log("Starting Quicksort...");
+
+        // make new list of movies filtered by criteria
+
+        List<KeyValuePair<string, List<string>>> filteredMovies = new List<KeyValuePair<string, List<string>>>();
+
+        // iterate through movie dataset to filter
+
+        foreach (var movie in data)
+        {
+            int movieYear = 0;
+
+            if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
+            {
+                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
+                {
+                    // add movie to list if it fits criteria
+
+                    filteredMovies.Add(movie);
+                }
+            }
+        }
+
+        // do quick sort stuff with filteredMovies
 
     }
     private void MaxHeap(List<string> Genres, int Year, int sortMethod)
@@ -160,8 +182,6 @@ public class Data : MonoBehaviour
         {
             heap[left].Value[valueToCompare] = "0";
         }
-
-        Debug.Log(heap[largest].Value[valueToCompare]);
 
         // if the right node is in bounds and larger than the current largest node, right node becomes the new largest
 
