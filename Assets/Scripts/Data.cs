@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class Data : MonoBehaviour
 {
     public Dictionary<string, List<string>> data = new(); //title is the key and then the list of strings stores the year, the runtime, the genres and the avg rating
-    
+    KeyValuePair<string, List<string>>[] heap; // max heap
+
     public void Start()
     {
         // Load the file from the Resources folder
@@ -62,7 +63,7 @@ public class Data : MonoBehaviour
         }
         else
         {
-            MaxHeap();
+            MaxHeap(Genres, Year);
         }
     }
 
@@ -70,8 +71,11 @@ public class Data : MonoBehaviour
     {
 
     }
-    private void MaxHeap()
+    private void MaxHeap(List<string> Genres, int Year)
     {
+        foreach (var movie in data)
+        {
 
+        }
     }
 }
