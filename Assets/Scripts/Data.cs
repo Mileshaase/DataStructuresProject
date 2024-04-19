@@ -144,6 +144,25 @@ public class Data : MonoBehaviour
             valueToCompare = 1;
         }
 
+        int runtime = 0;
+
+        // if the movie doesn't have a runtime, set it to 0
+
+        if (largest < heap.Length && !int.TryParse(heap[largest].Value[valueToCompare], out runtime))
+        {
+            heap[largest].Value[valueToCompare] = "0";
+        }
+        if (right < heap.Length && !int.TryParse(heap[right].Value[valueToCompare], out runtime))
+        {
+            heap[right].Value[valueToCompare] = "0";
+        }
+        if (left < heap.Length && !int.TryParse(heap[left].Value[valueToCompare], out runtime))
+        {
+            heap[left].Value[valueToCompare] = "0";
+        }
+
+        Debug.Log(heap[largest].Value[valueToCompare]);
+
         // if the right node is in bounds and larger than the current largest node, right node becomes the new largest
 
         if (right < heap.Length && float.Parse(heap[right].Value[valueToCompare]) > float.Parse(heap[largest].Value[valueToCompare]))
