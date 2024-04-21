@@ -62,6 +62,8 @@ public class Data : MonoBehaviour
 
         float heapStartTime = Time.realtimeSinceStartup;
 
+        Debug.Log(filteredMovies)
+
         MaxHeap(Genres, Year, SearchType);
 
         float maxHeapTime = Time.realtimeSinceStartup - heapStartTime;
@@ -95,9 +97,92 @@ public class Data : MonoBehaviour
         }
 
         // do quick sort stuff with filteredMovies
+        if (SortType == 0)
+        {
+            QuickSortByRuntime(filteredMovies, 0, filteredMovies.Count - 1);
+        }
+        else if (SortType == 1)
+        {
+            QuickSortByRating(filteredMovies, 0, filteredMovies.Count - 1);
+        }
 
+        // Get the top 5 movies
+        List<KeyValuePair<string, List<string>>> top5Movies = filteredMovies.Take(5).ToList();
+
+        // Log the top 5 movies
+        foreach (var movie in top5Movies)
+        {
+            Debug.Log($"Title: {movie.Key}, Runtime: {movie.Value[1]}, Rating: {movie.Value[3]}");
+        }
     }
-    private void MaxHeap(List<string> Genres, int Year, int sortMethod)
+
+    private void QuickSortByRuntime(List<KeyValuePair<string, List<string>>> movies, int low, int high)
+    {
+        if (low < high)
+        {
+            int pivotIndex = PartitionByRuntime(movies, low, high);
+            QuickSortByRuntime(movies, low, pivotIndex - 1);
+            QuickSortByRuntime(movies, pivotIndex + 1, high);
+        }
+    }
+
+    private int PartitionByRuntime(List<KeyValuePair<string, List<string>>> movies, int low, int high)
+    {
+        int pivot = int.Parse(movies[high].Value[1]);
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (int.Parse(movies[j].Value[1]) < pivot)
+            {
+                i++;
+                KeyValuePair<string, List<string>> temp = movies[i];
+                movies[i] = movies[j];
+                movies[j] = temp;
+            }
+        }
+
+        KeyValuePair<string, List<string>> temp1 = movies[i + 1];
+        movies[i + 1] = movies[high];
+        movies[high] = temp1;
+
+        return i + 1;
+    }
+
+    private void QuickSortByRating(List<KeyValuePair<string, List<string>>> movies, int low, int high)
+    {
+        if (low < high)
+        {
+            int pivotIndex = PartitionByRating(movies, low, high);
+            QuickSortByRating(movies, low, pivotIndex - 1);
+            QuickSortByRating(movies, pivotIndex + 1, high);
+        }
+    }
+
+    private int PartitionByRating(List<KeyValuePair<string, List<string>>> movies, int low, int high)
+    {
+        float pivot = float.Parse(movies[high].Value[3]);
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (float.Parse(movies[j].Value[3]) < pivot)
+            {
+                i++;
+                KeyValuePair<string, List<string>> temp = movies[i];
+                movies[i] = movies[j];
+                movies[j] = temp;
+            }
+        }
+
+        KeyValuePair<string, List<string>> temp1 = movies[i + 1];
+        movies[i + 1] = movies[high];
+        movies[high] = temp1;
+
+        return i + 1;
+    }
+}
+private void MaxHeap(List<string> Genres, int Year, int sortMethod)
     {
         Debug.Log("Making Max Heap...");
 
