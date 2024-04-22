@@ -58,8 +58,15 @@ public class Data : MonoBehaviour
 
     public void SortData(List<string> Genres, int Year, int SearchType)
     {
-        Debug.Log("Sorting...");
+        float quickSortStartTime = Time.realtimeSinceStartup;
+
         QuickSort(Genres, Year, SearchType);
+
+        float quickSortTime = Time.realtimeSinceStartup - quickSortStartTime;
+
+        Debug.Log("Quick Sort Time: " + quickSortTime);
+        
+
 
         float heapStartTime = Time.realtimeSinceStartup;
 
@@ -76,7 +83,7 @@ public class Data : MonoBehaviour
 
         // make new list of movies filtered by criteria
 
-        List<KeyValuePair<string, List<string>>> filteredMovies = new List<KeyValuePair<string, List<string>>>();
+        List<KeyValuePair<string, List<string>>> quickSortfilteredMovies = new List<KeyValuePair<string, List<string>>>();
 
         // iterate through movie dataset to filter
 
@@ -90,7 +97,7 @@ public class Data : MonoBehaviour
                 {
                     // add movie to list if it fits criteria
 
-                    filteredMovies.Add(movie);
+                    quickSortfilteredMovies.Add(movie);
                 }
             }
         }
@@ -98,15 +105,15 @@ public class Data : MonoBehaviour
         // do quick sort stuff with filteredMovies
         if (SortType == 0)
         {
-            QuickSortByRuntime(filteredMovies, 0, filteredMovies.Count - 1);
+            QuickSortByRuntime(quickSortfilteredMovies, 0, quickSortfilteredMovies.Count - 1);
         }
         else if (SortType == 1)
         {
-            QuickSortByRating(filteredMovies, 0, filteredMovies.Count - 1);
+            QuickSortByRating(quickSortfilteredMovies, 0, quickSortfilteredMovies.Count - 1);
         }
 
         // Get the top 5 movies
-        List<KeyValuePair<string, List<string>>> top5Movies = filteredMovies.Take(5).ToList();
+        List<KeyValuePair<string, List<string>>> top5Movies = quickSortfilteredMovies.Take(5).ToList();
 
         // Log the top 5 movies
         foreach (var movie in top5Movies)
