@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class UIScript : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class UIScript : MonoBehaviour
     public List<string> genres = new();
     public int year = 0;
     public int sortType = 0; // 0 is rating, 1 is runtime
-    public int sortMethod = 0;
+    public int sortMethod = -1;
     private GameObject resultsTab;
 
     private void Start()
@@ -95,7 +96,14 @@ public class UIScript : MonoBehaviour
 
     public void SubmitSearch()
     {
-        dataScript.SortData(genres, year, sortType, sortMethod);
+        if(genres.Count() != 0 && sortMethod != -1)
+        {
+            dataScript.SortData(genres, year, sortType, sortMethod);
+        }
+        else
+        {
+            Debug.Log("something not selected");
+        }
     }
 
     public void MakeAnotherSearch()

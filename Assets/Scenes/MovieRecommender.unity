@@ -2352,7 +2352,7 @@ MonoBehaviour:
   genres: []
   year: 0
   sortType: 0
-  sortMethod: 0
+  sortMethod: -1
 --- !u!1 &336198309
 GameObject:
   m_ObjectHideFlags: 0
