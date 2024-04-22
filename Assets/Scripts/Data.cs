@@ -126,19 +126,29 @@ public class Data : MonoBehaviour
         if (SortType == 0)
         {
             QuickSortByRuntime(quickSortfilteredMovies, 0, quickSortfilteredMovies.Count - 1);
+           
+            // Sort the movies in descending order by runtime
+            List<KeyValuePair<string, List<string>>> sortedMovies = quickSortfilteredMovies.OrderByDescending(movie => double.Parse(movie.Value[3])).ToList();
+
+            // Get the top 5 movies
+            List<KeyValuePair<string, List<string>>> top5Movies = sortedMovies.Take(5).ToList();
+            return top5Movies;
+
         }
         else if (SortType == 1)
         {
             QuickSortByRating(quickSortfilteredMovies, 0, quickSortfilteredMovies.Count - 1);
+
+            // Sort the movies in descending order by rating
+            List<KeyValuePair<string, List<string>>> sortedMovies = quickSortfilteredMovies.OrderByDescending(movie => double.Parse(movie.Value[1])).ToList();
+
+            // Get the top 5 movies
+            List<KeyValuePair<string, List<string>>> top5Movies = sortedMovies.Take(5).ToList();
+            return top5Movies;
         }
-        // Sort the movies in descending order by rating
-        List<KeyValuePair<string, List<string>>> sortedMovies = quickSortfilteredMovies.OrderByDescending(movie => double.Parse(movie.Value[3])).ToList();
-
-        // Get the top 5 movies
-        List<KeyValuePair<string, List<string>>> top5Movies = sortedMovies.Take(5).ToList();
-
-        return top5Movies;
+        return new List<KeyValuePair<string, List<string>>>();
     }
+
 
     private void QuickSortByRuntime(List<KeyValuePair<string, List<string>>> movies, int low, int high)
     {
@@ -152,12 +162,12 @@ public class Data : MonoBehaviour
 
     private int PartitionByRuntime(List<KeyValuePair<string, List<string>>> movies, int low, int high)
     {
-        int pivot = int.Parse(movies[high].Value[1]);
+        float pivot = float.Parse(movies[high].Value[1]);
         int i = low - 1;
 
         for (int j = low; j < high; j++)
         {
-            if (int.Parse(movies[j].Value[1]) < pivot)
+            if (float.Parse(movies[j].Value[1]) < pivot)
             {
                 i++;
                 KeyValuePair<string, List<string>> temp = movies[i];
