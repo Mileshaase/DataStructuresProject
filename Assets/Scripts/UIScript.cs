@@ -9,7 +9,13 @@ public class UIScript : MonoBehaviour
     public List<string> genres = new();
     public int year = 0;
     public int sortType; // 0 is rating, 1 is runtime
-    
+    private GameObject resultsTab;
+
+    private void Start()
+    {
+        resultsTab = transform.GetChild(2).gameObject;
+    }
+
     public void AddGenre(Toggle toggle)
     {
         if(toggle.isOn)
@@ -79,5 +85,10 @@ public class UIScript : MonoBehaviour
     public void SubmitSearch()
     {
         dataScript.SortData(genres, year, sortType);
+    }
+
+    public void MakeAnotherSearch()
+    {
+        resultsTab.SetActive(false);
     }
 }

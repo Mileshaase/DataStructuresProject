@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
+using TMPro;
 
 public class Data : MonoBehaviour
 {
     public Dictionary<string, List<string>> data = new(); //title is the key and then the list of strings stores the year, the runtime, the genres and the avg rating
     KeyValuePair<string, List<string>>[] heap; // max heap
+    public GameObject resultsTab;
 
     public void Start()
     {
@@ -58,9 +61,11 @@ public class Data : MonoBehaviour
 
     public void SortData(List<string> Genres, int Year, int SearchType)
     {
+
+
         float quickSortStartTime = Time.realtimeSinceStartup;
 
-        QuickSort(Genres, Year, SearchType);
+        List<KeyValuePair<string, List<string>>> quickSortResults = QuickSort(Genres, Year, SearchType);
 
         float quickSortTime = Time.realtimeSinceStartup - quickSortStartTime;
 
@@ -70,14 +75,24 @@ public class Data : MonoBehaviour
 
         float heapStartTime = Time.realtimeSinceStartup;
 
-        MaxHeap(Genres, Year, SearchType);
+        List<KeyValuePair<string, List<string>>> kthLargestHeapResults = MaxHeap(Genres, Year, SearchType);
 
         float maxHeapTime = Time.realtimeSinceStartup - heapStartTime;
 
         Debug.Log("Max Heap Time: " + maxHeapTime);
+
+
+        // output results
+        resultsTab.SetActive(true);
+
+        for (int i = 0; i < 5; i++)
+        {
+            resultsTab.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = kthLargestHeapResults[i].Key;
+            resultsTab.transform.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = kthLargestHeapResults[i].Value[2] + "     " + kthLargestHeapResults[i].Value[1] + "     " + kthLargestHeapResults[i].Value[3];
+        }
     }
 
-    private void QuickSort(List<string> Genres, int Year, int SortType)
+    private List<KeyValuePair<string, List<string>>> QuickSort(List<string> Genres, int Year, int SortType)
     {
         Debug.Log("Starting Quicksort...");
 
@@ -117,11 +132,7 @@ public class Data : MonoBehaviour
         // Get the top 5 movies
         List<KeyValuePair<string, List<string>>> top5Movies = sortedMovies.Take(5).ToList();
 
-        // Log the top 5 movies
-        foreach (var movie in top5Movies)
-        {
-            Debug.Log($"Title: {movie.Key}, Runtime: {movie.Value[1]}, Rating: {movie.Value[3]}");
-        }
+        return top5Movies;
     }
 
     private void QuickSortByRuntime(List<KeyValuePair<string, List<string>>> movies, int low, int high)
@@ -190,7 +201,7 @@ public class Data : MonoBehaviour
         return i + 1;
     }
     
-    private void MaxHeap(List<string> Genres, int Year, int sortMethod)
+    private List<KeyValuePair<string, List<string>>> MaxHeap(List<string> Genres, int Year, int sortMethod)
     {
         Debug.Log("Making Max Heap...");
 
@@ -223,11 +234,7 @@ public class Data : MonoBehaviour
 
         MakeHeap(sortMethod);
 
-        List<KeyValuePair<string, List<string>>> fiveLargest = kthLargest(sortMethod);
-        foreach (var movie in fiveLargest)
-        {
-            Debug.Log($"Title: {movie.Key}, Runtime: {movie.Value[1]}, Rating: {movie.Value[3]}");
-        }
+        return kthLargest(sortMethod);
     }
 
     private void MakeHeap(int sortMethod)
@@ -259,23 +266,6 @@ public class Data : MonoBehaviour
         {
             valueToCompare = 3;
         }
-
-        int runtime = 0;
-
-        // if the movie doesn't have a runtime, set it to 0
-
-        /*if (largest < heap.Length && !int.TryParse(heap[largest].Value[valueToCompare], out runtime))
-        {
-            heap[largest].Value[valueToCompare] = "0";
-        }
-        if (right < heap.Length && !int.TryParse(heap[right].Value[valueToCompare], out runtime))
-        {
-            heap[right].Value[valueToCompare] = "0";
-        }
-        if (left < heap.Length && !int.TryParse(heap[left].Value[valueToCompare], out runtime))
-        {
-            heap[left].Value[valueToCompare] = "0";
-        }*/
 
         // if the right node is in bounds and larger than the current largest node, right node becomes the new largest
 
