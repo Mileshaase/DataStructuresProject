@@ -93,7 +93,7 @@ public class Data : MonoBehaviour
 
             if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
             {
-                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
+                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10 && movie.Value[3] != @"\N" && movie.Value[1] != @"\N")
                 {
                     // add movie to list if it fits criteria
 
@@ -206,7 +206,7 @@ public class Data : MonoBehaviour
 
             if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
             {
-                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
+                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10  && movie.Value[3] != @"\N" && movie.Value[1] != @"\N")
                 {
                     // add movie to list if it fits criteria
 
