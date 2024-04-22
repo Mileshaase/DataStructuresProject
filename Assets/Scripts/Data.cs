@@ -62,8 +62,6 @@ public class Data : MonoBehaviour
 
         float heapStartTime = Time.realtimeSinceStartup;
 
-        Debug.Log(filteredMovies)
-
         MaxHeap(Genres, Year, SearchType);
 
         float maxHeapTime = Time.realtimeSinceStartup - heapStartTime;
@@ -181,8 +179,8 @@ public class Data : MonoBehaviour
 
         return i + 1;
     }
-}
-private void MaxHeap(List<string> Genres, int Year, int sortMethod)
+    
+    private void MaxHeap(List<string> Genres, int Year, int sortMethod)
     {
         Debug.Log("Making Max Heap...");
 
