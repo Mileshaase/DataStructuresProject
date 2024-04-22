@@ -11,13 +11,7 @@ public class UIScript : MonoBehaviour
     public List<string> genres = new();
     public int year = 0;
     public int sortType = 0; // 0 is rating, 1 is runtime
-    public int sortMethod = -1;
-    private GameObject resultsTab;
-
-    private void Start()
-    {
-        resultsTab = transform.GetChild(2).gameObject;
-    }
+    public int sortMethod = 1;
 
     public void AddGenre(Toggle toggle)
     {
