@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIScript : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class UIScript : MonoBehaviour
     public List<string> genres = new();
     public int year = 0;
     public int sortType = 0; // 0 is rating, 1 is runtime
+    public int sortMethod = 0;
     private GameObject resultsTab;
 
     private void Start()
@@ -82,13 +84,22 @@ public class UIScript : MonoBehaviour
         }
     }
 
+    public void QuickSort()
+    {
+        sortMethod = 0;
+    }
+    public void MaxHeap()
+    {
+        sortMethod = 1;
+    }
+
     public void SubmitSearch()
     {
-        dataScript.SortData(genres, year, sortType);
+        dataScript.SortData(genres, year, sortType, sortMethod);
     }
 
     public void MakeAnotherSearch()
     {
-        resultsTab.SetActive(false);
+        SceneManager.LoadScene("MovieRecommender");
     }
 }

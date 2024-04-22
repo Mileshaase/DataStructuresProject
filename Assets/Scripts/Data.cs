@@ -1,14 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Data : MonoBehaviour
 {
     public Dictionary<string, List<string>> data = new(); //title is the key and then the list of strings stores the year, the runtime, the genres and the avg rating
     KeyValuePair<string, List<string>>[] heap; // max heap
     public GameObject resultsTab;
+    public TextMeshProUGUI SearchFactors;
+    public GameObject Title;
+    public TextMeshProUGUI timeDisplay;
 
     public void Start()
     {
@@ -32,7 +35,7 @@ public class Data : MonoBehaviour
 
             // Extract data
             string primaryTitle = values[2]; // Assuming primaryTitle is at index 2
-            List<string> strings = new List<string>()
+            List<string> strings = new()
             {
                 values[4], // Year
                 values[6], // Runtime
@@ -59,36 +62,29 @@ public class Data : MonoBehaviour
         // }
     }
 
-    public void SortData(List<string> Genres, int Year, int SearchType)
+    public void SortData(List<string> Genres, int Year, int SearchType, int SortMethod)
     {
-
-
-        float quickSortStartTime = Time.realtimeSinceStartup;
-
-        List<KeyValuePair<string, List<string>>> quickSortResults = QuickSort(Genres, Year, SearchType);
-
-        float quickSortTime = Time.realtimeSinceStartup - quickSortStartTime;
-
-        Debug.Log("Quick Sort Time: " + quickSortTime);
-        
-
-
-        float heapStartTime = Time.realtimeSinceStartup;
-
-        List<KeyValuePair<string, List<string>>> kthLargestHeapResults = MaxHeap(Genres, Year, SearchType);
-
-        float maxHeapTime = Time.realtimeSinceStartup - heapStartTime;
-
-        Debug.Log("Max Heap Time: " + maxHeapTime);
-
-
-        // output results
-        resultsTab.SetActive(true);
-
-        for (int i = 0; i < 5; i++)
+        if(SortMethod == 0)
         {
-            resultsTab.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = kthLargestHeapResults[i].Key;
-            resultsTab.transform.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Genre(s): " + kthLargestHeapResults[i].Value[2] + "     Runtime: " + kthLargestHeapResults[i].Value[1] + " mins     Rating: " + kthLargestHeapResults[i].Value[3] + " / 10";
+            float quickSortStartTime = Time.realtimeSinceStartup;
+
+            List<KeyValuePair<string, List<string>>> quickSortResults = QuickSort(Genres, Year, SearchType);
+
+            float quickSortTime = Time.realtimeSinceStartup - quickSortStartTime;
+
+            Debug.Log("Quick Sort Time: " + quickSortTime);
+            StartCoroutine(ResultsDisplay(Genres, SearchType, quickSortResults, quickSortTime));
+        }
+        else
+        {
+            float heapStartTime = Time.realtimeSinceStartup;
+
+            List<KeyValuePair<string, List<string>>> kthLargestHeapResults = MaxHeap(Genres, Year, SearchType);
+
+            float maxHeapTime = Time.realtimeSinceStartup - heapStartTime;
+
+            Debug.Log("Max Heap Time: " + maxHeapTime);
+            StartCoroutine(ResultsDisplay(Genres, SearchType, kthLargestHeapResults, maxHeapTime));
         }
     }
 
@@ -98,7 +94,7 @@ public class Data : MonoBehaviour
 
         // make new list of movies filtered by criteria
 
-        List<KeyValuePair<string, List<string>>> quickSortfilteredMovies = new List<KeyValuePair<string, List<string>>>();
+        List<KeyValuePair<string, List<string>>> quickSortfilteredMovies = new();
 
         // iterate through movie dataset to filter
 
@@ -216,7 +212,7 @@ public class Data : MonoBehaviour
 
         // make new list of movies filtered by criteria
 
-        List<KeyValuePair<string, List<string>>> filteredMovies = new List<KeyValuePair<string, List<string>>>();
+        List<KeyValuePair<string, List<string>>> filteredMovies = new();
         
         // iterate through movie dataset to filter
 
@@ -274,9 +270,8 @@ public class Data : MonoBehaviour
         int largest = i;
 
         // determine values to be compared using the sortMethod
-        int valueToCompare = 0;
-
-        if(sortMethod == 0)
+        int valueToCompare;
+        if (sortMethod == 0)
         {
             valueToCompare = 3;
         }
@@ -313,7 +308,7 @@ public class Data : MonoBehaviour
 
     private List<KeyValuePair<string, List<string>>> kthLargest(int sortMethod)
     {
-        List<KeyValuePair<string, List<string>>> fiveLargest = new List<KeyValuePair<string, List<string>>>();
+        List<KeyValuePair<string, List<string>>> fiveLargest = new();
         for (int i = 0; i < 5; i++)
         {
             fiveLargest.Add(extractMax(sortMethod));
@@ -340,4 +335,57 @@ public class Data : MonoBehaviour
             throw new System.Exception("heap empty :(");
         }
     }
+
+    public IEnumerator ResultsDisplay(List<string> Genres, int SearchType, List<KeyValuePair<string, List<string>>> kthLargestHeapResults, float time)
+    {
+        // output results
+        resultsTab.SetActive(true);
+        Title.SetActive(false);
+        SearchFactors.gameObject.SetActive(true);
+        SearchFactors.text = "Top ";
+        for(int i = 0; i < Genres.Count - 2; i++)
+        {
+            SearchFactors.text += Genres[i] + ", ";
+        }
+        SearchFactors.text += Genres[Genres.Count - 1];
+        
+        if (SearchType == 0)
+        {
+            SearchFactors.text += " by Runtime";
+        }
+        else
+        {
+            SearchFactors.text += " by Rating";
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            resultsTab.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = kthLargestHeapResults[i].Key;
+            resultsTab.transform.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Genre(s): " + kthLargestHeapResults[i].Value[2] + "     Runtime: " + kthLargestHeapResults[i].Value[1] + " mins     Rating: " + kthLargestHeapResults[i].Value[3] + " / 10";
+            
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(ResultsAnimation(resultsTab.transform.GetChild(i)));
+        }
+        timeDisplay.text = time + "s";
+    }
+
+    public IEnumerator ResultsAnimation(Transform result)
+    {
+        Vector3 startPosition = result.localPosition;
+        Vector3 endPosition = new(1f, result.localPosition.y, result.localPosition.z);
+
+        float elapsedTime = 0f;
+        int duration = 1;
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            result.localPosition = Vector3.Lerp(startPosition, endPosition, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the object ends up at the exact end position
+        result.localPosition = endPosition;
+    }
 }
+
