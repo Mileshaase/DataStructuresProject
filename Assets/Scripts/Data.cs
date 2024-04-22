@@ -58,6 +58,7 @@ public class Data : MonoBehaviour
 
     public void SortData(List<string> Genres, int Year, int SearchType)
     {
+        Debug.Log("Sorting...");
         QuickSort(Genres, Year, SearchType);
 
         float heapStartTime = Time.realtimeSinceStartup;

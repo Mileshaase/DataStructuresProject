@@ -1373,10 +1373,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc54ed50c321dc43a5e2bc184dc502b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataScript: {fileID: 0}
+  dataScript: {fileID: 383078521}
   genres: []
   year: 0
-  sortType: 0
+  sortType: 1
 --- !u!1 &336198309
 GameObject:
   m_ObjectHideFlags: 0
@@ -5433,7 +5433,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1342377622}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 327560497}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
+        m_MethodName: SubmitSearch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1342377622
 MonoBehaviour:
   m_ObjectHideFlags: 0
