@@ -106,7 +106,7 @@ public class Data : MonoBehaviour
         {
             int movieYear = 0;
 
-            if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
+            if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year or runtime
             {
                 if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10 && movie.Value[3] != @"\N" && movie.Value[1] != @"\N")
                 {
@@ -260,11 +260,11 @@ public class Data : MonoBehaviour
 
         if(sortMethod == 0)
         {
-            valueToCompare = 1;
+            valueToCompare = 3;
         }
         else
         {
-            valueToCompare = 3;
+            valueToCompare = 1;
         }
 
         // if the right node is in bounds and larger than the current largest node, right node becomes the new largest
@@ -307,16 +307,12 @@ public class Data : MonoBehaviour
     {
         if (heap.Count() != 0)
         {
-            // Save the maximum element
             KeyValuePair<string, List<string>> maxItem = heap[0];
 
-            // Replace the root with the last element in the heap
             heap[0] = heap[heap.Length - 1];
 
-            // Reduce the size of the heap
             heap[0] = heap[heap.Length - 1];
 
-            // Heapify the root to maintain the heap property
             heapify(0, sortMethod);
 
             return maxItem;
