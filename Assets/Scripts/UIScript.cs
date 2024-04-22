@@ -90,7 +90,7 @@ public class UIScript : MonoBehaviour
 
     public void SubmitSearch()
     {
-        if(genres.Count() != 0 && sortMethod != -1)
+        if(genres.Count() != 0 )
         {
             dataScript.SortData(genres, year, sortType, sortMethod);
         }
