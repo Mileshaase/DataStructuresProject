@@ -1996,7 +1996,7 @@ MonoBehaviour:
   dataScript: {fileID: 383078521}
   genres: []
   year: 0
-  sortType: 1
+  sortType: 0
 --- !u!1 &336198309
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,7 +2289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1b02a7b06ea8b488499b1e5ac413cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultsTab: {fileID: 0}
+  resultsTab: {fileID: 2044439710}
 --- !u!1 &390942101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2834,7 +2834,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 435277877}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 327560497}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
+        m_MethodName: MakeAnotherSearch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &435277877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9287,7 +9299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2044439711
 RectTransform:
   m_ObjectHideFlags: 0

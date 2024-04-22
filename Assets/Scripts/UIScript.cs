@@ -8,7 +8,7 @@ public class UIScript : MonoBehaviour
     public Data dataScript;
     public List<string> genres = new();
     public int year = 0;
-    public int sortType; // 0 is rating, 1 is runtime
+    public int sortType = 0; // 0 is rating, 1 is runtime
     private GameObject resultsTab;
 
     private void Start()
