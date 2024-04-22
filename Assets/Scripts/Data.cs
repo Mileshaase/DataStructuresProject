@@ -90,14 +90,18 @@ public class Data : MonoBehaviour
         foreach (var movie in data)
         {
             int movieYear = 0;
+            int movieRuntime = 0;
 
             if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
             {
-                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
+                if(int.TryParse(movie.Value[0], out movieRuntime))
                 {
-                    // add movie to list if it fits criteria
+                    if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
+                    {
+                        // add movie to list if it fits criteria
 
-                    quickSortfilteredMovies.Add(movie);
+                        quickSortfilteredMovies.Add(movie);
+                    }
                 }
             }
         }
@@ -200,19 +204,23 @@ public class Data : MonoBehaviour
         
         // iterate through movie dataset to filter
 
-        foreach(var movie in data)
+        foreach (var movie in data)
         {
             int movieYear = 0;
+            int movieRuntime = 0;
 
             if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
             {
-                if(Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
+                if(int.TryParse(movie.Value[0], out movieRuntime))
+                {
+                    if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
                     {
                         // add movie to list if it fits criteria
 
                         filteredMovies.Add(movie);
                     }
-            }            
+                }
+            }
         }
 
         // convert list into an array
@@ -225,7 +233,7 @@ public class Data : MonoBehaviour
 
         for(int i = 0; i < 5; i++)
         {
-            Debug.Log(heap[i].Key);
+            Debug.Log($"Title: {heap[i].Key}, Runtime: {heap[i].Value[1]}, Rating: {heap[i].Value[3]}");
         }
     }
 
@@ -252,18 +260,18 @@ public class Data : MonoBehaviour
 
         if(sortMethod == 0)
         {
-            valueToCompare = 3;
+            valueToCompare = 1;
         }
         else
         {
-            valueToCompare = 1;
+            valueToCompare = 3;
         }
 
         int runtime = 0;
 
         // if the movie doesn't have a runtime, set it to 0
 
-        if (largest < heap.Length && !int.TryParse(heap[largest].Value[valueToCompare], out runtime))
+        /*if (largest < heap.Length && !int.TryParse(heap[largest].Value[valueToCompare], out runtime))
         {
             heap[largest].Value[valueToCompare] = "0";
         }
@@ -274,7 +282,7 @@ public class Data : MonoBehaviour
         if (left < heap.Length && !int.TryParse(heap[left].Value[valueToCompare], out runtime))
         {
             heap[left].Value[valueToCompare] = "0";
-        }
+        }*/
 
         // if the right node is in bounds and larger than the current largest node, right node becomes the new largest
 
