@@ -90,18 +90,14 @@ public class Data : MonoBehaviour
         foreach (var movie in data)
         {
             int movieYear = 0;
-            int movieRuntime = 0;
 
             if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
             {
-                if(int.TryParse(movie.Value[0], out movieRuntime))
+                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
                 {
-                    if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
-                    {
-                        // add movie to list if it fits criteria
+                    // add movie to list if it fits criteria
 
-                        quickSortfilteredMovies.Add(movie);
-                    }
+                    quickSortfilteredMovies.Add(movie);
                 }
             }
         }
@@ -207,18 +203,14 @@ public class Data : MonoBehaviour
         foreach (var movie in data)
         {
             int movieYear = 0;
-            int movieRuntime = 0;
 
             if (int.TryParse(movie.Value[0], out movieYear)) // make sure there are no errors for movies with "/N" as their year
             {
-                if(int.TryParse(movie.Value[0], out movieRuntime))
+                if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
                 {
-                    if (Genres.Contains(movie.Value[2]) && movieYear <= Year && movieYear >= Year - 10)
-                    {
-                        // add movie to list if it fits criteria
+                    // add movie to list if it fits criteria
 
-                        filteredMovies.Add(movie);
-                    }
+                    filteredMovies.Add(movie);
                 }
             }
         }
@@ -231,9 +223,10 @@ public class Data : MonoBehaviour
 
         MakeHeap(sortMethod);
 
-        for(int i = 0; i < 5; i++)
+        List<KeyValuePair<string, List<string>>> fiveLargest = kthLargest(sortMethod);
+        foreach (var movie in fiveLargest)
         {
-            Debug.Log($"Title: {heap[i].Key}, Runtime: {heap[i].Value[1]}, Rating: {heap[i].Value[3]}");
+            Debug.Log($"Title: {movie.Key}, Runtime: {movie.Value[1]}, Rating: {movie.Value[3]}");
         }
     }
 
@@ -307,6 +300,40 @@ public class Data : MonoBehaviour
             heap[largest] = temp;
 
             heapify(largest, sortMethod);
+        }
+    }
+
+    private List<KeyValuePair<string, List<string>>> kthLargest(int sortMethod)
+    {
+        List<KeyValuePair<string, List<string>>> fiveLargest = new List<KeyValuePair<string, List<string>>>();
+        for (int i = 0; i < 5; i++)
+        {
+            fiveLargest.Add(extractMax(sortMethod));
+        }
+        return fiveLargest;
+    }
+
+    private KeyValuePair<string, List<string>> extractMax(int sortMethod)
+    {
+        if (heap.Count() != 0)
+        {
+            // Save the maximum element
+            KeyValuePair<string, List<string>> maxItem = heap[0];
+
+            // Replace the root with the last element in the heap
+            heap[0] = heap[heap.Length - 1];
+
+            // Reduce the size of the heap
+            heap[0] = heap[heap.Length - 1];
+
+            // Heapify the root to maintain the heap property
+            heapify(0, sortMethod);
+
+            return maxItem;
+        }
+        else
+        {
+            throw new System.Exception("heap empty :(");
         }
     }
 }
