@@ -111,9 +111,11 @@ public class Data : MonoBehaviour
         {
             QuickSortByRating(quickSortfilteredMovies, 0, quickSortfilteredMovies.Count - 1);
         }
+        // Sort the movies in descending order by rating
+        List<KeyValuePair<string, List<string>>> sortedMovies = quickSortfilteredMovies.OrderByDescending(movie => double.Parse(movie.Value[3])).ToList();
 
         // Get the top 5 movies
-        List<KeyValuePair<string, List<string>>> top5Movies = quickSortfilteredMovies.Take(5).ToList();
+        List<KeyValuePair<string, List<string>>> top5Movies = sortedMovies.Take(5).ToList();
 
         // Log the top 5 movies
         foreach (var movie in top5Movies)
