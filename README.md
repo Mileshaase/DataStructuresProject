@@ -2,7 +2,7 @@
  Project 3 for Data Structures, created by Miles, Kinnara, and Sallie
 
 -----------------------------------------------------------------------
- In order to run this program, one must open the project either on the itch page: https://magisterimperium.itch.io/movie-magic or in a Unity project.
+ In order to run this program, one must open the project either on the itch page: https://magisterimperium.itch.io/movie-magic or in a Unity project. (on the itch page it is recommended to open the window in fullscreen in order to see the full picture.)
 
  Users can select genres from the main screen, and then the sorting factors as well as the sorting methods. 
  
