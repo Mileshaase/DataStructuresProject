@@ -361,11 +361,11 @@ public class Data : MonoBehaviour
         
         if (SearchType == 0)
         {
-            SearchFactors.text += " by Runtime";
+            SearchFactors.text += " Movies by Rating";
         }
         else
         {
-            SearchFactors.text += " by Rating";
+            SearchFactors.text += " Movies by Runtime";
         }
 
         for (int i = 0; i < 5; i++)
