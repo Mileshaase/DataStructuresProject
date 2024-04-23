@@ -353,7 +353,7 @@ public class Data : MonoBehaviour
         Title.SetActive(false);
         SearchFactors.gameObject.SetActive(true);
         SearchFactors.text = "Top ";
-        for(int i = 0; i < Genres.Count - 2; i++)
+        for(int i = 0; i < Genres.Count - 1; i++)
         {
             SearchFactors.text += Genres[i] + ", ";
         }
